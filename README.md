@@ -25,7 +25,7 @@ Las series del INDEC y la ANSES se toman de la [API de Series de Tiempo](https:/
 
 ## Cuándo se actualiza
 
-- **Día 15 de cada mes:** actualización completa.
+- **Días 15, 16 y 17 de cada mes:** actualización completa (el 16 y el 17, de resguardo por si algún dato se publica después del 15).
 - **Días hábiles:** cotizaciones del dólar.
 
 Antes de publicar, `pipeline/validar.py` controla que no falten series, que las fechas no retrocedan
