@@ -1,0 +1,45 @@
+{
+  "actualizado": "2026-09-21T14:12Z",
+  "indicadores": {
+    "ipc": {
+      "titulo": "Inflación (IPC)",
+      "fecha": "2026-08",
+      "valor": 12276.766
+    },
+    "emae": {
+      "titulo": "Actividad económica (EMAE)",
+      "fecha": "2026-06",
+      "valor": 161.0133
+    },
+    "pbi": {
+      "titulo": "Producto Interno Bruto (PBI)",
+      "fecha": "2026-04",
+      "valor": 792800.3415
+    },
+    "desempleo": {
+      "titulo": "Desempleo",
+      "fecha": "2026-04",
+      "valor": 0.079
+    },
+    "pobreza": {
+      "titulo": "Pobreza",
+      "fecha": "2026-01",
+      "valor": 0.282
+    },
+    "salarios": {
+      "titulo": "Salarios",
+      "fecha": "2026-06",
+      "valor": 9442.5
+    },
+    "prestaciones": {
+      "titulo": "Montos y beneficiarios de la protección social",
+      "fecha": "2026-09",
+      "valor": 154031.0
+    },
+    "canastas": {
+      "titulo": "Canastas básicas",
+      "fecha": "2026-08",
+      "valor": 519578.43
+    }
+  }
+}

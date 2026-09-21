@@ -1,0 +1,157 @@
+{
+  "_fuente": "API de Series de Tiempo — https://apis.datos.gob.ar/series/api (datos INDEC)",
+  "indicadores": [
+    {
+      "id": "ipc",
+      "titulo": "Inflación (IPC)",
+      "frecuencia": "mensual",
+      "unidad": "Índice base dic-2016 = 100",
+      "fuente": "INDEC — Índice de Precios al Consumidor, Nacional",
+      "series": [
+        {"key": "general", "nombre": "Nivel general", "grupo": "General", "id": "148.3_INIVELNAL_DICI_M_26"},
+        {"key": "nucleo", "nombre": "Núcleo", "grupo": "Categorías", "id": "148.3_INUCLEONAL_DICI_M_19"},
+        {"key": "regulados", "nombre": "Regulados", "grupo": "Categorías", "id": "148.3_IREGULANAL_DICI_M_22"},
+        {"key": "estacionales", "nombre": "Estacionales", "grupo": "Categorías", "id": "148.3_IESTACINAL_DICI_M_25"},
+        {"key": "alimentos", "nombre": "Alimentos y bebidas no alcohólicas", "grupo": "Divisiones", "id": "146.3_IALIMENNAL_DICI_M_45"},
+        {"key": "bebidas", "nombre": "Bebidas alcohólicas y tabaco", "grupo": "Divisiones", "id": "146.3_IBEBIDANAL_DICI_M_39"},
+        {"key": "prendas", "nombre": "Prendas de vestir y calzado", "grupo": "Divisiones", "id": "146.3_IPRENDANAL_DICI_M_35"},
+        {"key": "vivienda", "nombre": "Vivienda, agua, electricidad y combustibles", "grupo": "Divisiones", "id": "146.3_IVIVIENNAL_DICI_M_52"},
+        {"key": "equipamiento", "nombre": "Equipamiento y mantenimiento del hogar", "grupo": "Divisiones", "id": "146.3_IEQUIPANAL_DICI_M_46"},
+        {"key": "salud", "nombre": "Salud", "grupo": "Divisiones", "id": "146.3_ISALUDNAL_DICI_M_18"},
+        {"key": "transporte", "nombre": "Transporte", "grupo": "Divisiones", "id": "146.3_ITRANSPNAL_DICI_M_23"},
+        {"key": "comunicacion", "nombre": "Comunicación", "grupo": "Divisiones", "id": "146.3_ICOMUNINAL_DICI_M_27"},
+        {"key": "recreacion", "nombre": "Recreación y cultura", "grupo": "Divisiones", "id": "146.3_IRECREANAL_DICI_M_31"},
+        {"key": "educacion", "nombre": "Educación", "grupo": "Divisiones", "id": "146.3_IEDUCACNAL_DICI_M_22"},
+        {"key": "restaurantes", "nombre": "Restaurantes y hoteles", "grupo": "Divisiones", "id": "146.3_IRESTAUNAL_DICI_M_33"},
+        {"key": "varios", "nombre": "Bienes y servicios varios", "grupo": "Divisiones", "id": "146.3_IBIENESNAL_DICI_M_36"}
+      ]
+    },
+    {
+      "id": "emae",
+      "titulo": "Actividad económica (EMAE)",
+      "frecuencia": "mensual",
+      "unidad": "Índice base 2004 = 100",
+      "fuente": "INDEC — Estimador Mensual de Actividad Económica",
+      "series": [
+        {"key": "general", "nombre": "EMAE general", "grupo": "General", "id": "143.3_NO_PR_2004_A_21"},
+        {"key": "general_desest", "nombre": "EMAE general (desestacionalizado)", "grupo": "General", "id": "143.3_NO_PR_2004_A_31", "oculta": true},
+        {"key": "agro", "nombre": "Agricultura, ganadería, caza y silvicultura", "grupo": "Sectores", "id": "11.3_ISOM_2004_M_39"},
+        {"key": "pesca", "nombre": "Pesca", "grupo": "Sectores", "id": "11.3_VIPAA_2004_M_5"},
+        {"key": "minas", "nombre": "Explotación de minas y canteras", "grupo": "Sectores", "id": "11.3_ISD_2004_M_26"},
+        {"key": "industria", "nombre": "Industria manufacturera", "grupo": "Sectores", "id": "11.3_VMASD_2004_M_23"},
+        {"key": "electricidad", "nombre": "Electricidad, gas y agua", "grupo": "Sectores", "id": "11.3_ITC_2004_M_21"},
+        {"key": "construccion", "nombre": "Construcción", "grupo": "Sectores", "id": "11.3_VMATC_2004_M_12"},
+        {"key": "comercio", "nombre": "Comercio mayorista, minorista y reparaciones", "grupo": "Sectores", "id": "11.3_AGCS_2004_M_41"},
+        {"key": "hoteles", "nombre": "Hoteles y restaurantes", "grupo": "Sectores", "id": "11.3_P_2004_M_20"},
+        {"key": "transporte", "nombre": "Transporte y comunicaciones", "grupo": "Sectores", "id": "11.3_EMC_2004_M_25"},
+        {"key": "financiera", "nombre": "Intermediación financiera", "grupo": "Sectores", "id": "11.3_IM_2004_M_25"},
+        {"key": "inmobiliarias", "nombre": "Actividades inmobiliarias, empresariales y de alquiler", "grupo": "Sectores", "id": "11.3_SEGA_2004_M_48"},
+        {"key": "admpublica", "nombre": "Administración pública y defensa", "grupo": "Sectores", "id": "11.3_C_2004_M_60"},
+        {"key": "ensenanza", "nombre": "Enseñanza", "grupo": "Sectores", "id": "11.3_CMMR_2004_M_10"},
+        {"key": "salud", "nombre": "Servicios sociales y de salud", "grupo": "Sectores", "id": "11.3_HR_2004_M_24"},
+        {"key": "comunitarios", "nombre": "Otros servicios comunitarios", "grupo": "Sectores", "id": "11.3_TAC_2004_M_60"},
+        {"key": "impuestos", "nombre": "Impuestos netos de subsidios", "grupo": "Sectores", "id": "11.3_IF_2004_M_25"}
+      ]
+    },
+    {
+      "id": "pbi",
+      "titulo": "Producto Interno Bruto (PBI)",
+      "frecuencia": "trimestral",
+      "unidad": "Millones de pesos a precios de 2004",
+      "fuente": "INDEC — Cuentas Nacionales, Informe de avance del nivel de actividad",
+      "series": [
+        {"key": "general", "nombre": "PBI", "grupo": "General", "id": "4.2_OGP_2004_T_17"},
+        {"key": "general_desest", "nombre": "PBI (desestacionalizado)", "grupo": "General", "id": "3.2_OGP_D_2004_T_17", "oculta": true},
+        {"key": "consumo_privado", "nombre": "Consumo privado", "grupo": "Componentes de la demanda", "id": "4.2_MGCP_2004_T_25"},
+        {"key": "consumo_publico", "nombre": "Consumo público", "grupo": "Componentes de la demanda", "id": "4.2_DGCP_2004_T_30"},
+        {"key": "inversion", "nombre": "Inversión (formación bruta de capital fijo)", "grupo": "Componentes de la demanda", "id": "4.2_DGIT_2004_T_25"},
+        {"key": "exportaciones", "nombre": "Exportaciones", "grupo": "Componentes de la demanda", "id": "4.2_DGE_2004_T_26"},
+        {"key": "importaciones", "nombre": "Importaciones", "grupo": "Componentes de la demanda", "id": "4.2_OGI_2004_T_25"},
+        {"key": "s_agro", "nombre": "Agricultura, ganadería, caza y silvicultura", "grupo": "Sectores de actividad", "id": "6.2_AGCS_2004_T_39"},
+        {"key": "s_pesca", "nombre": "Pesca", "grupo": "Sectores de actividad", "id": "6.2_P_2004_T_5"},
+        {"key": "s_minas", "nombre": "Explotación de minas y canteras", "grupo": "Sectores de actividad", "id": "6.2_EMC_2004_T_26"},
+        {"key": "s_industria", "nombre": "Industria manufacturera", "grupo": "Sectores de actividad", "id": "6.2_IM_2004_T_23"},
+        {"key": "s_electricidad", "nombre": "Electricidad, gas y agua", "grupo": "Sectores de actividad", "id": "6.2_SEGA_2004_T_32"},
+        {"key": "s_construccion", "nombre": "Construcción", "grupo": "Sectores de actividad", "id": "6.2_C_2004_T_12"},
+        {"key": "s_comercio", "nombre": "Comercio mayorista, minorista y reparaciones", "grupo": "Sectores de actividad", "id": "6.2_CMMR_2004_T_41"},
+        {"key": "s_hoteles", "nombre": "Hoteles y restaurantes", "grupo": "Sectores de actividad", "id": "6.2_HR_2004_T_20"},
+        {"key": "s_transporte", "nombre": "Transporte, almacenamiento y comunicaciones", "grupo": "Sectores de actividad", "id": "6.2_TAC_2004_T_40"},
+        {"key": "s_financiera", "nombre": "Intermediación financiera", "grupo": "Sectores de actividad", "id": "6.2_IF_2004_T_25"},
+        {"key": "s_inmobiliarias", "nombre": "Actividades inmobiliarias, empresariales y de alquiler", "grupo": "Sectores de actividad", "id": "6.2_AIEA_2004_T_48"},
+        {"key": "s_admpublica", "nombre": "Administración pública y defensa", "grupo": "Sectores de actividad", "id": "6.2_APDPSSAO_2004_T_60"},
+        {"key": "s_ensenanza", "nombre": "Enseñanza", "grupo": "Sectores de actividad", "id": "6.2_E_2004_T_10"},
+        {"key": "s_salud", "nombre": "Servicios sociales y de salud", "grupo": "Sectores de actividad", "id": "6.2_SSS_2004_T_24"},
+        {"key": "s_comunitarios", "nombre": "Otros servicios comunitarios", "grupo": "Sectores de actividad", "id": "6.2_OASCSP_2004_T_60"}
+      ]
+    },
+    {
+      "id": "desempleo",
+      "titulo": "Desempleo",
+      "frecuencia": "trimestral",
+      "unidad": "% de la población económicamente activa",
+      "fuente": "INDEC — Encuesta Permanente de Hogares (31 aglomerados)",
+      "tipo": "tasa",
+      "series": [
+        {"key": "desocupacion", "nombre": "Tasa de desocupación", "grupo": "General", "id": "45.2_ECTDT_0_T_33"},
+        {"key": "actividad", "nombre": "Tasa de actividad", "grupo": "General", "id": "43.2_ECTAT_0_T_33"},
+        {"key": "informalidad", "nombre": "Asalariados sin descuento jubilatorio", "grupo": "Informalidad", "id": "52.2_ASDJ_0_0_37"}
+      ]
+    },
+    {
+      "id": "pobreza",
+      "titulo": "Pobreza",
+      "frecuencia": "semestral",
+      "unidad": "% de personas",
+      "fuente": "INDEC — Encuesta Permanente de Hogares (31 aglomerados)",
+      "tipo": "tasa",
+      "series": [
+        {"key": "personas", "nombre": "Personas bajo la línea de pobreza", "grupo": "General", "id": "64.2_POBLACION_NUA_0_0_34_74"}
+      ]
+    },
+    {
+      "id": "salarios",
+      "titulo": "Salarios",
+      "frecuencia": "mensual",
+      "unidad": "Índice base oct-2016 = 100",
+      "fuente": "INDEC — Índice de Salarios",
+      "series": [
+        {"key": "total", "nombre": "Índice de salarios (total)", "grupo": "General", "id": "149.1_TL_INDIIOS_OCTU_0_21"},
+        {"key": "privado", "nombre": "Registrado — sector privado", "grupo": "Sectores", "id": "149.1_SOR_PRIADO_OCTU_0_25"},
+        {"key": "publico", "nombre": "Registrado — sector público", "grupo": "Sectores", "id": "149.1_SOR_PUBICO_OCTU_0_14"},
+        {"key": "no_registrado", "nombre": "No registrado — sector privado", "grupo": "Sectores", "id": "149.1_SOR_PRIADO_OCTU_0_28"}
+      ]
+    },
+    {
+      "id": "prestaciones",
+      "titulo": "Montos y beneficiarios de la protección social",
+      "frecuencia": "mensual",
+      "unidad": "Pesos corrientes / cantidad de prestaciones",
+      "fuente": "ANSES — vía API de Series de Tiempo (datos.gob.ar)",
+      "tipo": "mixto",
+      "series": [
+        {"key": "auh_monto", "nombre": "AUH: monto por hijo", "grupo": "Montos", "id": "165.1_AAUH_0_0_3"},
+        {"key": "haber_minimo", "nombre": "Haber jubilatorio mínimo", "grupo": "Montos", "id": "58.1_MP_0_M_24"},
+        {"key": "auh_titulares", "nombre": "AUH: niñas, niños y adolescentes", "grupo": "Beneficiarios", "id": "189.1_TOTAL_AUHAUH_0_0_9", "cero_es_nulo": true},
+        {"key": "aue_titulares", "nombre": "AUE: embarazadas", "grupo": "Beneficiarios", "id": "189.1_ASIGNACIONAZO_0_0_29", "cero_es_nulo": true},
+        {"key": "jub_total", "nombre": "Jubilaciones y pensiones SIPA", "grupo": "Beneficiarios", "id": "189.1_TOTAL_JUBIINO_2_0_0_58", "cero_es_nulo": true},
+        {"key": "jubilaciones", "nombre": "Jubilaciones SIPA", "grupo": "Beneficiarios", "id": "189.1_JUBILACIONINO_2_0_0_53", "cero_es_nulo": true},
+        {"key": "pensiones", "nombre": "Pensiones SIPA", "grupo": "Beneficiarios", "id": "189.1_PENSIONES_INO_INT_0_0_49", "cero_es_nulo": true},
+        {"key": "puam", "nombre": "Pensión Universal para el Adulto Mayor", "grupo": "Beneficiarios", "id": "189.1_PENSION_UNYOR_0_0_30", "cero_es_nulo": true}
+      ]
+    },
+    {
+      "id": "canastas",
+      "titulo": "Canastas básicas",
+      "frecuencia": "mensual",
+      "unidad": "Pesos corrientes",
+      "fuente": "INDEC — Valorización mensual de la CBA y CBT (GBA)",
+      "tipo": "pesos",
+      "series": [
+        {"key": "cbt", "nombre": "Canasta Básica Total (por adulto)", "grupo": "Por adulto equivalente", "id": "150.1_CSTA_BATAL_0_D_20"},
+        {"key": "cba", "nombre": "Canasta Básica Alimentaria (por adulto)", "grupo": "Por adulto equivalente", "id": "150.1_CSTA_BARIA_0_D_26"},
+        {"key": "linea_pobreza", "nombre": "Línea de pobreza (hogar tipo de 4 personas)", "grupo": "Hogar tipo", "id": "150.1_LA_POBREZA_0_D_13"},
+        {"key": "linea_indigencia", "nombre": "Línea de indigencia (hogar tipo de 4 personas)", "grupo": "Hogar tipo", "id": "150.1_LA_INDICIA_0_D_16"}
+      ]
+    }
+  ]
+}
