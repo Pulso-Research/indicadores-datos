@@ -20,13 +20,14 @@ Se actualizan solos con GitHub Actions y se publican en GitHub Pages:
 | `prestaciones` | Montos y beneficiarios de AUH, AUE, jubilaciones y PUAM | ANSES |
 | `proteccion` | Gasto mensual devengado en programas sociales | Presupuesto Abierto (Ministerio de Economía) |
 | `dolar` | Oficial, mayorista, blue, MEP, CCL, cripto y tarjeta | ArgentinaDatos |
+| `riesgo` | Riesgo país (EMBI+ Argentina), desde 2007 | ArgentinaDatos (JP Morgan) |
 
 Las series del INDEC y la ANSES se toman de la [API de Series de Tiempo](https://datos.gob.ar/series) de datos.gob.ar.
 
 ## Cuándo se actualiza
 
 - **Días 15, 16 y 17 de cada mes:** actualización completa (el 16 y el 17, de resguardo por si algún dato se publica después del 15).
-- **Días hábiles:** cotizaciones del dólar.
+- **Días hábiles:** cotizaciones del dólar y riesgo país.
 
 Antes de publicar, `pipeline/validar.py` controla que no falten series, que las fechas no retrocedan
 y que no haya saltos imposibles. Si algo falla, no se publica nada y la web sigue mostrando los datos anteriores.

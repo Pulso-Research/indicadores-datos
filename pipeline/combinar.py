@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 ARCHIVOS = ["ipc", "emae", "pbi", "desempleo", "pobreza", "salarios", "canastas",
-            "prestaciones", "proteccion", "dolar"]
+            "prestaciones", "proteccion", "dolar", "riesgo"]
 
 
 def main():

@@ -3,7 +3,7 @@ name: Actualizar datos
 # Corre todos los días a las 9:00 de Argentina (12:00 UTC):
 #   - días 15, 16 y 17: actualización completa (INDEC, ANSES, Presupuesto Abierto y dólar).
 #     El 16 y el 17 son de resguardo, por si el INDEC publica algún dato después del 15.
-#   - el resto de los días hábiles: solo el dólar
+#   - el resto de los días hábiles: dólar y riesgo país
 #   - sábados y domingos (salvo del 15 al 17): no hace nada
 # También se puede correr a mano desde la pestaña Actions ("Run workflow").
 on:

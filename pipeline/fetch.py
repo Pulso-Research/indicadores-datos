@@ -2,7 +2,7 @@
 (datos.gob.ar) y escribe un JSON por indicador en data/, más data/resumen.json.
 
 Uso:  python pipeline/fetch.py               (todo: INDEC/ANSES, presupuesto y dólar)
-      python pipeline/fetch.py --solo-dolar  (solo cotizaciones del dólar, para la corrida diaria)
+      python pipeline/fetch.py --solo-dolar  (dólar y riesgo país, para la corrida diaria)
 Solo usa la biblioteca estándar de Python.
 """
 import json
@@ -80,11 +80,19 @@ def ultimo(serie, fechas):
     return None
 
 
+def diarios():
+    """Series diarias: cotizaciones del dólar y riesgo país (ArgentinaDatos)."""
+    print("Descargando cotizaciones del dólar (ArgentinaDatos)...", flush=True)
+    import dolar
+    dolar.main()
+    print("Descargando riesgo país (ArgentinaDatos)...", flush=True)
+    import riesgo
+    riesgo.main()
+
+
 def main():
     if "--solo-dolar" in sys.argv:
-        print("Descargando cotizaciones del dólar (ArgentinaDatos)...", flush=True)
-        import dolar
-        dolar.main()
+        diarios()
         return
 
     catalogo = json.loads(CATALOG.read_text(encoding="utf-8"))
@@ -109,9 +117,7 @@ def main():
     import presupuesto
     presupuesto.main()
 
-    print("Descargando cotizaciones del dólar (ArgentinaDatos)...", flush=True)
-    import dolar
-    dolar.main()
+    diarios()
     print("Listo.")
 
 

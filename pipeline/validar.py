@@ -6,7 +6,7 @@ Compara cada data/<indicador>.json recién descargado con la última versión pu
   - las fechas retroceden o la historia se achica
   - la historia cambia demasiado (más allá de las revisiones habituales)
   - el último dato de la serie principal da un salto imposible
-  - el dólar no se actualiza hace más de 10 días
+  - el dólar o el riesgo país no se actualizan hace más de 10 días
 
 Uso:  python pipeline/validar.py   (sale con código 1 si hay problemas)
 """
@@ -137,10 +137,34 @@ def revisar_dolar():
         problemas.append("dolar: la última fecha retrocede")
 
 
+def revisar_riesgo():
+    f = DATA / "riesgo.json"
+    if not f.exists():
+        problemas.append("riesgo: falta el archivo")
+        return
+    d = json.loads(f.read_text(encoding="utf-8"))
+    fechas, v = d["diario"]["fechas"], d["diario"]["valores"]
+    if not fechas or len(fechas) != len(v):
+        problemas.append("riesgo: sin datos o valores incompletos")
+        return
+    atraso = (date.today() - datetime.strptime(fechas[-1], "%Y-%m-%d").date()).days
+    if atraso > 10:
+        problemas.append(f"riesgo: el último dato tiene {atraso} días")
+    if any(x is not None and not 0 < x < 30000 for x in v):
+        problemas.append("riesgo: hay valores fuera de rango (0 a 30.000 puntos)")
+    xs = [x for x in v if x]
+    if len(xs) >= 2 and abs(xs[-1] / xs[-2] - 1) > 0.5:
+        problemas.append(f"riesgo: salto de {abs(xs[-1] / xs[-2] - 1):.0%} en un día")
+    prev = anterior("riesgo")
+    if prev and fechas[-1] < prev["diario"]["fechas"][-1]:
+        problemas.append("riesgo: la última fecha retrocede")
+
+
 def main():
     for nombre in INDICADORES:
         revisar_indicador(nombre)
     revisar_dolar()
+    revisar_riesgo()
     if problemas:
         print("Controles NO superados. No se publican los datos:")
         for p in problemas:
