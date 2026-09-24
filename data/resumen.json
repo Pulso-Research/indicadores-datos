@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-09-23T13:23Z",
+  "actualizado": "2026-09-24T00:18Z",
   "indicadores": {
     "ipc": {
       "titulo": "Inflación (IPC)",
@@ -28,8 +28,8 @@
     },
     "salarios": {
       "titulo": "Salarios",
-      "fecha": "2026-06",
-      "valor": 9442.5
+      "fecha": "2026-07",
+      "valor": 9708.64
     },
     "prestaciones": {
       "titulo": "Montos y beneficiarios de la protección social",
