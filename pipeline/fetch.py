@@ -113,6 +113,10 @@ def main():
 
     (DATA / "resumen.json").write_text(json.dumps(resumen, ensure_ascii=False, indent=2), encoding="utf-8")
 
+    print("Calculando indicadores de consumo (INDEC)...", flush=True)
+    import consumo
+    consumo.main()
+
     print("Descargando gasto en protección social (Presupuesto Abierto)...", flush=True)
     import presupuesto
     presupuesto.main()

@@ -18,7 +18,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
-INDICADORES = ["ipc", "emae", "pbi", "desempleo", "pobreza", "salarios", "canastas", "prestaciones", "proteccion"]
+INDICADORES = ["ipc", "emae", "pbi", "desempleo", "pobreza", "salarios", "canastas", "prestaciones", "proteccion", "consumo"]
 
 # salto máximo aceptable entre los dos últimos datos (proporción), por tipo de indicador
 SALTO_MAX = {"indice": 0.5, "pesos": 0.5, "mixto": 1.0}

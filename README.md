@@ -19,6 +19,7 @@ Se actualizan solos con GitHub Actions y se publican en GitHub Pages:
 | `canastas` | Canasta básica total y alimentaria | INDEC |
 | `prestaciones` | Montos y beneficiarios de AUH, AUE, jubilaciones y PUAM | ANSES |
 | `proteccion` | Gasto mensual devengado en programas sociales | Presupuesto Abierto (Ministerio de Economía) |
+| `consumo` | Ventas en supermercados, mayoristas y shoppings, con rubros | INDEC |
 | `dolar` | Oficial, mayorista, blue, MEP, CCL, cripto y tarjeta | ArgentinaDatos |
 | `riesgo` | Riesgo país (EMBI+ Argentina), desde 2007 | ArgentinaDatos (JP Morgan) |
 
