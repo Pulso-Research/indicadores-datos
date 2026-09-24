@@ -1,5 +1,5 @@
 """Indicadores de consumo del INDEC: supermercados, autoservicios mayoristas y
-centros de compras (shoppings).
+centros de compras (shoppings), más los saldos de préstamos al consumo del BCRA.
 
 Los tres canales se toman de los índices oficiales a precios constantes.
 Los rubros se publican en pesos corrientes: acá se deflactan por el IPC nacional
@@ -47,6 +47,12 @@ SERIES = [
     ("c_jugueteria", "Juguetería", "Rubros de shoppings", "458.1_JUGUETERIARIA_ABRI_M_10_48", True),
     ("c_libreria", "Librería y papelería", "Rubros de shoppings", "458.1_LIBRERIA_PRIA_ABRI_M_18_18", True),
     ("c_diversion", "Diversión y esparcimiento", "Rubros de shoppings", "458.1_DIVERSION_NTO_ABRI_M_23_37", True),
+
+    # Saldos de préstamos en pesos al sector privado (BCRA), deflactados por IPC
+    ("p_consumo", "Préstamos al consumo (total)", "Financiamiento", "91.1_DETALLE_PREND_0_0_33", True),
+    ("p_personales", "Préstamos personales", "Financiamiento", "91.1_DETALLE_PRLES_0_0_52", True),
+    ("p_tarjetas", "Tarjetas de crédito", "Financiamiento", "91.1_DETALLE_PRTAS_0_0_60", True),
+    ("p_prendarios", "Prendarios (autos)", "Financiamiento", "91.1_DETALLE_PREND_0_0_53", True),
 ]
 
 
@@ -71,7 +77,7 @@ def main():
         "titulo": "Consumo",
         "frecuencia": "mensual",
         "unidad": "Índice base 2017 = 100, a precios constantes",
-        "fuente": "INDEC — Encuestas de supermercados, autoservicios mayoristas y centros de compras",
+        "fuente": "INDEC (encuestas de supermercados, autoservicios mayoristas y centros de compras) y BCRA (préstamos)",
         "series": [{"key": k, "nombre": n, "grupo": g, "id": i} for k, n, g, i, _ in SERIES],
     }
     datos = fetch.descargar(indicador)
@@ -84,11 +90,20 @@ def main():
             v = [None if (x is None or ipc.get(f) is None) else x / ipc[f] for x, f in zip(v, fechas)]
         s["valores"] = a_indice(v, fechas)
 
+    # recorta los meses iniciales sin ningún dato (el IPC, que deflacta, empieza en dic-2016)
+    corte = 0
+    while corte < len(fechas) and all(s["valores"][corte] is None for s in datos["series"]):
+        corte += 1
+    if corte:
+        datos["fechas"] = fechas[corte:]
+        for s in datos["series"]:
+            s["valores"] = s["valores"][corte:]
+
     datos.update({
         "titulo": "Consumo",
         "frecuencia": "mensual",
         "unidad": "Índice base 2017 = 100, a precios constantes",
-        "fuente": "INDEC — Encuestas de supermercados, autoservicios mayoristas y centros de compras",
+        "fuente": "INDEC (encuestas de supermercados, autoservicios mayoristas y centros de compras) y BCRA (préstamos)",
         "tipo": "volumen",
         "actualizado": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%MZ"),
     })
