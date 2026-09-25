@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-09-25T01:46Z",
+  "actualizado": "2026-09-25T15:45Z",
   "indicadores": {
     "ipc": {
       "titulo": "Inflación (IPC)",
@@ -8,8 +8,8 @@
     },
     "emae": {
       "titulo": "Actividad económica (EMAE)",
-      "fecha": "2026-06",
-      "valor": 161.0133
+      "fecha": "2026-07",
+      "valor": 151.5542
     },
     "pbi": {
       "titulo": "Producto Interno Bruto (PBI)",
