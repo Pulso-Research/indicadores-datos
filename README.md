@@ -28,7 +28,7 @@ Las series del INDEC y la ANSES se toman de la [API de Series de Tiempo](https:/
 ## Cuándo se actualiza
 
 - **Días hábiles a las 10:30 y 15:05 (hora de Argentina):** dólar y riesgo país.
-- **Lunes, miércoles y viernes a las 19:00:** actualización completa (a esa hora ya están publicados los informes del INDEC).
+- **Lunes, miércoles y viernes a las 8:00 y a las 19:00:** actualización completa (la de las 19:00 alcanza los informes que el INDEC publica alrededor de las 16:00).
 
 Antes de publicar, `pipeline/validar.py` controla que no falten series, que las fechas no retrocedan
 y que no haya saltos imposibles. Si algo falla, no se publica nada y la web sigue mostrando los datos anteriores.

@@ -2,13 +2,15 @@ name: Actualizar datos
 
 # Horarios de Argentina (UTC-3, sin horario de verano):
 #   - 10:30 y 15:05, días hábiles: dólar y riesgo país (apertura y cierre del mercado)
-#   - 19:00, lunes, miércoles y viernes: actualización completa (INDEC, ANSES,
-#     Presupuesto Abierto, dólar y riesgo país). A esa hora ya están publicados
-#     los informes del INDEC, que salen alrededor de las 16:00.
+#   - 8:00 y 19:00, lunes, miércoles y viernes: actualización completa (INDEC, ANSES,
+#     Presupuesto Abierto, consumo, préstamos, dólar y riesgo país). La de las 19:00
+#     alcanza los informes del INDEC del mismo día, que salen alrededor de las 16:00;
+#     la de las 8:00 deja todo al día antes de que arranque la jornada.
 # GitHub puede demorar las tareas programadas entre 5 y 20 minutos.
 # También se puede correr a mano desde la pestaña Actions ("Run workflow").
 on:
   schedule:
+    - cron: "0 11 * * 1,3,5"  # 8:00 ART
     - cron: "30 13 * * 1-5"   # 10:30 ART
     - cron: "5 18 * * 1-5"    # 15:05 ART
     - cron: "0 22 * * 1,3,5"  # 19:00 ART
@@ -47,7 +49,7 @@ jobs:
         id: modo
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then m="${{ inputs.modo }}"
-          elif [ "${{ github.event.schedule }}" = "0 22 * * 1,3,5" ]; then m="completo"
+          elif [ "${{ github.event.schedule }}" = "0 11 * * 1,3,5" ] || [ "${{ github.event.schedule }}" = "0 22 * * 1,3,5" ]; then m="completo"
           else m="dolar"; fi
           echo "modo=$m" >> "$GITHUB_OUTPUT"
           echo "Modo de esta corrida: $m"
