@@ -1,0 +1,24 @@
+# Informalidad laboral TOTAL (ocupados informales, EPH-INDEC): incluye asalariados sin
+# aportes, cuentapropistas informales y trabajo familiar sin remuneración.
+# El INDEC la publica en informes en PDF, no como dato abierto, así que se carga a mano.
+#
+# Cómo agregar un trimestre nuevo:
+#   1. Buscar el dato en el informe "Mercado de trabajo. Tasas e indicadores socioeconómicos (EPH)"
+#      o en "Indicadores de informalidad laboral (EPH)", en indec.gob.ar.
+#   2. Agregar una fila acá abajo. El período es el mes en que EMPIEZA el trimestre:
+#      1.er trim = 01, 2.º = 04, 3.er = 07, 4.º = 10.
+#   3. Guardar; el resto es automático.
+#
+# La serie del INDEC arranca en el cuarto trimestre de 2023.
+periodo,valor,fuente
+2023-10,41.4,INDEC - Indicadores de informalidad laboral (EPH), 14/04/2025
+2024-01,40.8,INDEC - Indicadores de informalidad laboral (EPH), 14/04/2025
+2024-04,41.6,INDEC - Indicadores de informalidad laboral (EPH), 14/04/2025
+2024-07,42.6,INDEC - Indicadores de informalidad laboral (EPH), 14/04/2025
+2024-10,42.0,INDEC - Indicadores de informalidad laboral (EPH), 13/04/2026
+2025-01,42.0,INDEC - Indicadores de informalidad laboral (EPH), 13/04/2026
+2025-04,43.2,INDEC - Indicadores de informalidad laboral (EPH), 13/04/2026
+2025-07,43.3,INDEC - Indicadores de informalidad laboral (EPH), 13/04/2026
+2025-10,43.0,INDEC - Indicadores de informalidad laboral (EPH), 13/04/2026
+2026-01,44.2,INDEC - Mercado de trabajo. Tasas e indicadores socioeconómicos (EPH) 1er trim 2026
+2026-04,45.0,INDEC - Mercado de trabajo. Tasas e indicadores socioeconómicos (EPH) 2do trim 2026

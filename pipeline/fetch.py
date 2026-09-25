@@ -113,6 +113,10 @@ def main():
 
     (DATA / "resumen.json").write_text(json.dumps(resumen, ensure_ascii=False, indent=2), encoding="utf-8")
 
+    print("Sumando las series de carga manual...", flush=True)
+    import manual
+    manual.main()
+
     print("Calculando indicadores de consumo (INDEC)...", flush=True)
     import consumo
     consumo.main()

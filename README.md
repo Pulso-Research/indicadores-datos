@@ -13,7 +13,7 @@ Se actualizan solos con GitHub Actions y se publican en GitHub Pages:
 | `ipc` | Inflación: nivel general, categorías y 12 divisiones | INDEC |
 | `emae` | Actividad económica: total y sectores | INDEC |
 | `pbi` | PBI trimestral: total, demanda y sectores | INDEC |
-| `desempleo` | Desocupación, actividad e informalidad (EPH) | INDEC |
+| `desempleo` | Desocupación, actividad, informalidad asalariada e informalidad total | INDEC |
 | `pobreza` | Personas bajo la línea de pobreza (EPH) | INDEC |
 | `salarios` | Índice de salarios | INDEC |
 | `canastas` | Canasta básica total y alimentaria | INDEC |
@@ -32,6 +32,13 @@ Las series del INDEC y la ANSES se toman de la [API de Series de Tiempo](https:/
 
 Antes de publicar, `pipeline/validar.py` controla que no falten series, que las fechas no retrocedan
 y que no haya saltos imposibles. Si algo falla, no se publica nada y la web sigue mostrando los datos anteriores.
+
+## Series de carga manual
+
+La informalidad laboral **total** (que suma cuentapropistas y otras formas) se publica solo en
+informes en PDF, así que se carga a mano en `manual/informalidad_total.csv`: se agrega una fila
+por trimestre y `pipeline/manual.py` la incorpora a `desempleo.json`. La informalidad
+**asalariada** (asalariados sin descuento jubilatorio) sí es automática.
 
 ## Correr a mano
 
