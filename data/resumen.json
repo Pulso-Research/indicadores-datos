@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-09-26T00:25Z",
+  "actualizado": "2026-09-28T18:32Z",
   "indicadores": {
     "ipc": {
       "titulo": "Inflación (IPC)",
@@ -23,8 +23,8 @@
     },
     "pobreza": {
       "titulo": "Pobreza",
-      "fecha": "2026-01",
-      "valor": 0.282
+      "fecha": "2026-07",
+      "valor": 0.323
     },
     "salarios": {
       "titulo": "Salarios",
