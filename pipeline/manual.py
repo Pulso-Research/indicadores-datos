@@ -1,7 +1,7 @@
 """Suma a los datos automáticos las series que se cargan a mano.
 
-Hoy es una sola: la informalidad laboral total (manual/informalidad_total.csv), que el
-INDEC publica en informes en PDF y no como dato abierto.
+Hoy son dos: la informalidad laboral total y la indigencia, que el INDEC publica en
+informes en PDF y no como datos abiertos.
 
 Cada archivo de manual/ tiene columnas periodo,valor,fuente. El período usa el mes en que
 empieza el trimestre (01, 04, 07 o 10), igual que las series trimestrales de la API.
@@ -21,6 +21,8 @@ MANUAL = ROOT / "manual"
 CARGAS = [
     ("informalidad_total.csv", "desempleo", "informalidad_total",
      "Informalidad total (carga manual)", "Informalidad", 100),
+    ("indigencia.csv", "pobreza", "indigencia",
+     "Indigencia (carga manual)", "General", 100),
 ]
 
 

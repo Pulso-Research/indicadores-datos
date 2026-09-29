@@ -1,0 +1,32 @@
+# Indigencia: personas bajo la línea de indigencia (%), EPH-INDEC, 31 aglomerados.
+# El INDEC la publica solo en el informe de pobreza (PDF), no como dato abierto.
+#
+# Cómo agregar un semestre nuevo:
+#   1. Buscar el dato en el informe "Incidencia de la pobreza y la indigencia en 31
+#      aglomerados urbanos" (indec.gob.ar), Cuadro 1, fila Indigencia / Personas.
+#   2. Agregar una fila acá abajo. OJO con el período: se usa el mes en que TERMINA
+#      el semestre, igual que la serie de pobreza de la API:
+#        1.er semestre de un año -> AAAA-07
+#        2.º semestre de un año  -> (AAAA+1)-01
+#   3. Guardar; el resto es automático.
+periodo,valor,fuente
+2017-01,6.1,INDEC - Informe de pobreza (2.º sem. 2016)
+2017-07,6.2,INDEC - Informe de pobreza (1.er sem. 2017)
+2018-01,4.8,INDEC - Informe de pobreza (2.º sem. 2017)
+2018-07,4.9,INDEC - Informe de pobreza (1.er sem. 2018)
+2019-01,6.7,INDEC - Informe de pobreza (2.º sem. 2018)
+2019-07,7.7,INDEC - Informe de pobreza (1.er sem. 2019)
+2020-01,8.0,INDEC - Informe de pobreza (2.º sem. 2019)
+2020-07,10.5,INDEC - Informe de pobreza (1.er sem. 2020)
+2021-01,10.5,INDEC - Informe de pobreza (2.º sem. 2020)
+2021-07,10.7,INDEC - Informe de pobreza (1.er sem. 2021)
+2022-01,8.2,INDEC - Informe de pobreza (2.º sem. 2021)
+2022-07,8.8,INDEC - Informe de pobreza (1.er sem. 2022)
+2023-01,8.1,INDEC - Informe de pobreza (2.º sem. 2022)
+2023-07,9.3,INDEC - Informe de pobreza (1.er sem. 2023)
+2024-01,11.9,INDEC - Informe de pobreza (2.º sem. 2023)
+2024-07,18.1,INDEC - Informe de pobreza (1.er sem. 2024)
+2025-01,8.2,INDEC - Informe de pobreza (2.º sem. 2024)
+2025-07,6.9,INDEC - Informe de pobreza (1.er sem. 2025)
+2026-01,6.3,INDEC - Informe de pobreza (2.º sem. 2025)
+2026-07,7.5,INDEC - Informe de pobreza (1.er sem. 2026)

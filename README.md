@@ -35,10 +35,13 @@ y que no haya saltos imposibles. Si algo falla, no se publica nada y la web sigu
 
 ## Series de carga manual
 
-La informalidad laboral **total** (que suma cuentapropistas y otras formas) se publica solo en
-informes en PDF, así que se carga a mano en `manual/informalidad_total.csv`: se agrega una fila
-por trimestre y `pipeline/manual.py` la incorpora a `desempleo.json`. La informalidad
-**asalariada** (asalariados sin descuento jubilatorio) sí es automática.
+Dos series se publican solo en informes en PDF, así que se cargan a mano y
+`pipeline/manual.py` las incorpora al indicador que corresponde:
+
+- `manual/informalidad_total.csv` → informalidad laboral total, por trimestre (la **asalariada** sí es automática).
+- `manual/indigencia.csv` → personas bajo la línea de indigencia, por semestre (la **pobreza** sí es automática).
+
+Cada archivo tiene adentro las instrucciones para agregar un período nuevo.
 
 ## Correr a mano
 
