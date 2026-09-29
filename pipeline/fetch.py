@@ -47,6 +47,8 @@ def descargar(indicador):
             fila[i : i + len(lote)] = valores
 
     fechas = sorted(por_fecha)
+    if indicador.get("desde"):  # el catálogo puede pedir arrancar más tarde
+        fechas = [f for f in fechas if f >= indicador["desde"]]
     # Recorta meses iniciales sin ningún dato
     while fechas and all(v is None for v in por_fecha[fechas[0]]):
         fechas.pop(0)
