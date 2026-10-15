@@ -80,7 +80,9 @@ def main():
         "fuente": "INDEC (encuestas de supermercados, autoservicios mayoristas y centros de compras) y BCRA (préstamos)",
         "series": [{"key": k, "nombre": n, "grupo": g, "id": i} for k, n, g, i, _ in SERIES],
     }
-    datos = fetch.descargar(indicador)
+    previo = fetch.leer_previo("consumo")
+    datos = fetch.descargar(indicador, previo, completar=False)
+    incompletas = set(datos.pop("incompletas", []))
     fechas = datos["fechas"]
     ipc = ipc_por_mes()
 
@@ -89,6 +91,14 @@ def main():
         if deflactar:  # rubros en pesos corrientes -> a precios constantes con el IPC
             v = [None if (x is None or ipc.get(f) is None) else x / ipc[f] for x, f in zip(v, fechas)]
         s["valores"] = a_indice(v, fechas)
+
+    # Si la API no devolvió una serie completa, se conserva entera la versión publicada
+    # (no se mezclan datos: la base 2017 = 100 depende de la serie entera).
+    for s in datos["series"]:
+        if s["key"] in incompletas:
+            anterior = previo[s["key"]]
+            s["valores"] = [anterior.get(f) for f in fechas]
+            print(f"  aviso: consumo/{s['key']}: la API la devolvió incompleta; se mantiene la publicada")
 
     # recorta los meses iniciales sin ningún dato (el IPC, que deflacta, empieza en dic-2016)
     corte = 0

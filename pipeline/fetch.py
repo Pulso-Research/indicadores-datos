@@ -18,33 +18,93 @@ CATALOG = ROOT / "pipeline" / "catalog.json"
 DATA = ROOT / "data"
 API = "https://apis.datos.gob.ar/series/api/series/"
 IDS_POR_PEDIDO = 20  # la API acepta hasta 40 ids por consulta
+# La API a veces devuelve series vacías o con huecos al azar (pasó en octubre de 2026).
+# Las series a las que les falta algún dato ya publicado se vuelven a pedir de a pocas.
+LOTE_REINTENTO = 5
+REINTENTOS_SEG = 90  # tiempo máximo de reintentos por indicador
 
 
-def pedir(ids):
+def pedir(ids, intentos=3, timeout=60):
     """Devuelve {fecha: [valor por id]} para ids de la misma frecuencia."""
     params = {"ids": ",".join(ids), "limit": 5000, "format": "json", "metadata": "none"}
     url = API + "?" + urllib.parse.urlencode(params)
     req = urllib.request.Request(url, headers={"User-Agent": "indicadores-de-la-realidad/0.1"})
-    for intento in range(3):
+    for intento in range(intentos):
         try:
-            with urllib.request.urlopen(req, timeout=60) as r:
+            with urllib.request.urlopen(req, timeout=timeout) as r:
                 filas = json.load(r)["data"]
             return {f[0][:7]: f[1:] for f in filas}
         except Exception:
-            if intento == 2:
+            if intento == intentos - 1:
                 raise
             time.sleep(3)
 
 
-def descargar(indicador):
+def leer_previo(nombre):
+    """{key: {fecha: valor}} de la versión guardada, para detectar y tapar huecos."""
+    ruta = DATA / f"{nombre}.json"
+    if not ruta.exists():
+        return {}
+    d = json.loads(ruta.read_text(encoding="utf-8"))
+    return {s["key"]: {f: v for f, v in zip(d["fechas"], s["valores"]) if v is not None}
+            for s in d["series"]}
+
+
+def descargar(indicador, previo=None, completar=True):
+    """Baja las series del indicador. Con `previo` (ver leer_previo) vuelve a pedir las series
+    a las que les falta algún dato ya publicado; si la API sigue sin darlo y `completar` es
+    True, conserva el dato anterior. Con completar=False devuelve en "incompletas" las claves
+    que quedaron con huecos, para que quien llama decida qué hacer."""
     series = indicador["series"]
+    previo = previo or {}
     por_fecha = {}
-    for i in range(0, len(series), IDS_POR_PEDIDO):
-        lote = series[i : i + IDS_POR_PEDIDO]
-        datos = pedir([s["id"] for s in lote])
+
+    def volcar(datos, posiciones):
         for fecha, valores in datos.items():
             fila = por_fecha.setdefault(fecha, [None] * len(series))
-            fila[i : i + len(lote)] = valores
+            for j, v in zip(posiciones, valores):
+                if v is not None:
+                    fila[j] = v
+
+    def incompletas():
+        return [j for j, s in enumerate(series)
+                if any(f not in por_fecha or por_fecha[f][j] is None for f in previo.get(s["key"], {}))]
+
+    for i in range(0, len(series), IDS_POR_PEDIDO):
+        lote = list(range(i, min(i + IDS_POR_PEDIDO, len(series))))
+        try:
+            volcar(pedir([series[j]["id"] for j in lote]), lote)
+        except Exception as e:
+            if not previo:
+                raise
+            print(f"  aviso: falló un pedido a la API ({e}); se reintenta de a pocas series")
+
+    faltan = incompletas()
+    limite = time.monotonic() + REINTENTOS_SEG
+    while faltan and time.monotonic() < limite:
+        print(f"  reintentando {len(faltan)} series incompletas...", flush=True)
+        time.sleep(5)
+        for k in range(0, len(faltan), LOTE_REINTENTO):
+            lote = faltan[k : k + LOTE_REINTENTO]
+            try:
+                volcar(pedir([series[j]["id"] for j in lote], intentos=1, timeout=30), lote)
+            except Exception:
+                pass
+            if time.monotonic() >= limite:
+                break
+        faltan = incompletas()
+
+    if faltan and completar:
+        for j in faltan:
+            tapados = 0
+            for f, v in previo[series[j]["key"]].items():
+                fila = por_fecha.setdefault(f, [None] * len(series))
+                if fila[j] is None:
+                    fila[j] = v
+                    tapados += 1
+            print(f"  aviso: {indicador['id']}/{series[j]['key']}: la API no devolvió {tapados} datos; "
+                  "se mantienen los ya publicados")
+        faltan = []
 
     fechas = sorted(por_fecha)
     if indicador.get("desde"):  # el catálogo puede pedir arrancar más tarde
@@ -72,7 +132,7 @@ def descargar(indicador):
         "tipo": indicador.get("tipo", "indice"),
         "fechas": fechas,
         "series": salida_series,
-    }
+    } | ({"incompletas": [series[j]["key"] for j in faltan]} if faltan else {})
 
 
 def ultimo(serie, fechas):
@@ -104,7 +164,7 @@ def main():
 
     for ind in catalogo["indicadores"]:
         print(f"Descargando {ind['id']} ({len(ind['series'])} series)...", flush=True)
-        datos = descargar(ind)
+        datos = descargar(ind, leer_previo(ind["id"]))
         datos["actualizado"] = ahora
         (DATA / f"{ind['id']}.json").write_text(
             json.dumps(datos, ensure_ascii=False, separators=(",", ":")), encoding="utf-8"

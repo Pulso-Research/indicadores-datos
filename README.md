@@ -33,6 +33,10 @@ Las series del INDEC y la ANSES se toman de la [API de Series de Tiempo](https:/
 Antes de publicar, `pipeline/validar.py` controla que no falten series, que las fechas no retrocedan
 y que no haya saltos imposibles. Si algo falla, no se publica nada y la web sigue mostrando los datos anteriores.
 
+Si la API de Series de Tiempo devuelve una serie con datos faltantes (pasa a veces, al azar),
+`fetch.py` la vuelve a pedir durante hasta 90 segundos; si igual falta algún dato que ya estaba
+publicado, conserva el anterior y lo avisa en el registro de la corrida. Los datos nuevos se suman igual.
+
 ## Series de carga manual
 
 Dos series se publican solo en informes en PDF, así que se cargan a mano y
