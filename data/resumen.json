@@ -1,10 +1,10 @@
 {
-  "actualizado": "2026-11-13T18:26Z",
+  "actualizado": "2026-11-14T02:02Z",
   "indicadores": {
     "ipc": {
       "titulo": "Inflación (IPC)",
-      "fecha": "2026-08",
-      "valor": 12276.766
+      "fecha": "2026-10",
+      "valor": 12785.9321
     },
     "emae": {
       "titulo": "Actividad económica (EMAE)",
@@ -28,18 +28,18 @@
     },
     "salarios": {
       "titulo": "Salarios",
-      "fecha": "2026-07",
-      "valor": 9708.64
+      "fecha": "2026-08",
+      "valor": 9973.55
     },
     "prestaciones": {
       "titulo": "Montos y beneficiarios de la protección social",
-      "fecha": "2026-09",
-      "valor": 154031.0
+      "fecha": "2026-10",
+      "valor": 156588.0
     },
     "canastas": {
       "titulo": "Canastas básicas",
-      "fecha": "2026-08",
-      "valor": 519578.43
+      "fecha": "2026-09",
+      "valor": 528318.67
     }
   }
 }
