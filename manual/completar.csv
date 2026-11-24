@@ -1,0 +1,4 @@
+# Datos que el INDEC ya publicó y la API de datos.gob.ar todavía no cargó.
+# Solo llenan huecos: cuando la API trae el período, manda la API y la fila se puede borrar.
+# indicador y serie son los de pipeline/catalog.json (por ejemplo emae,general).
+indicador,serie,periodo,valor,fuente

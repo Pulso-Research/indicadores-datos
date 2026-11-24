@@ -46,7 +46,9 @@ def leer_previo(nombre):
     if not ruta.exists():
         return {}
     d = json.loads(ruta.read_text(encoding="utf-8"))
-    return {s["key"]: {f: v for f, v in zip(d["fechas"], s["valores"]) if v is not None}
+    # los datos completados a mano (manual/completar.csv) no cuentan: la API todavía no los tiene
+    return {s["key"]: {f: v for f, v in zip(d["fechas"], s["valores"])
+                       if v is not None and f not in s.get("manual_periodos", ())}
             for s in d["series"]}
 
 

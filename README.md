@@ -47,6 +47,16 @@ Dos series se publican solo en informes en PDF, así que se cargan a mano y
 
 Cada archivo tiene adentro las instrucciones para agregar un período nuevo.
 
+### Adelantar un dato que la API todavía no cargó
+
+`manual/completar.csv` (columnas `indicador,serie,periodo,valor,fuente`) llena huecos de
+cualquier serie automática con datos que el INDEC ya publicó y datos.gob.ar todavía no.
+Solo se usa mientras falta el dato: cuando la API trae ese período, manda la API y la fila
+se puede borrar.
+
+Para el EMAE, `python pipeline/completar_emae.py` baja los cuadros del INDEC y agrega solo
+los meses que faltan (requiere la librería `xlrd`; es una herramienta para usar a mano).
+
 ## Correr a mano
 
 Requiere Python 3.12, sin librerías extra.
