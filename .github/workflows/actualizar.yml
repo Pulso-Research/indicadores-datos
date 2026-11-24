@@ -35,9 +35,6 @@ jobs:
   actualizar:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -95,6 +92,29 @@ jobs:
         with:
           path: _site
 
+  # La publicación va en un job aparte: cuando corría en el mismo job que la subida,
+  # GitHub a veces todavía no encontraba el paquete ("No artifacts named github-pages")
+  # y la corrida fallaba aunque los datos ya estuvieran guardados.
+  publicar:
+    needs: actualizar
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy2.outputs.page_url || steps.deploy.outputs.page_url }}
+    steps:
       - name: Publicar en GitHub Pages
         id: deploy
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+
+      - name: Esperar antes de reintentar
+        if: steps.deploy.outcome == 'failure'
+        run: |
+          echo "La publicación falló, reintento en 1 minuto..."
+          sleep 60
+
+      - name: Publicar en GitHub Pages (reintento)
+        id: deploy2
+        if: steps.deploy.outcome == 'failure'
         uses: actions/deploy-pages@v4
