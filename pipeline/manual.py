@@ -7,9 +7,10 @@ Cada archivo de manual/ tiene columnas periodo,valor,fuente. El período usa el 
 empieza el trimestre (01, 04, 07 o 10), igual que las series trimestrales de la API.
 
 Además, manual/completar.csv adelanta datos que el INDEC ya publicó pero la API de
-datos.gob.ar todavía no cargó (columnas indicador,serie,periodo,valor,fuente). Solo llena
-los huecos: en cuanto la API trae ese período, se usa el dato de la API y la fila manual
-deja de tener efecto, así que se puede borrar.
+datos.gob.ar todavía no cargó (columnas indicador,serie,periodo,valor,fuente). Mientras a la
+API le falte alguno de esos datos, se usan todas las filas del indicador, también las que
+corrigen meses anteriores (el INDEC suele revisar los últimos meses en cada publicación).
+En cuanto la API trae todos los períodos, manda la API y las filas se pueden borrar.
 
 Uso:  python pipeline/manual.py   (lo llama fetch.py al final)
 """
@@ -50,30 +51,29 @@ def completar():
     for indicador in sorted({r["indicador"].strip() for r in filas}):
         ruta = DATA / f"{indicador}.json"
         d = json.loads(ruta.read_text(encoding="utf-8"))
-        usados, ignorados = [], []
+        propias = []
         for r in (r for r in filas if r["indicador"].strip() == indicador):
-            key, periodo, valor = r["serie"].strip(), r["periodo"].strip(), float(r["valor"])
+            key, periodo = r["serie"].strip(), r["periodo"].strip()
             serie = next((s for s in d["series"] if s["key"] == key), None)
             if serie is None:
                 print(f"  aviso: completar.csv: {indicador} no tiene la serie {key}")
                 continue
+            propias.append((serie, periodo, float(r["valor"])))
+        idx = {f: i for i, f in enumerate(d["fechas"])}
+        if not any(p not in idx or s["valores"][idx[p]] is None for s, p, _ in propias):
+            print(f"  {indicador}: la API ya trae todos los datos de completar.csv; se pueden borrar")
+            continue
+        for serie, periodo, valor in propias:
             if periodo not in d["fechas"]:
                 i = sum(1 for x in d["fechas"] if x < periodo)
                 d["fechas"].insert(i, periodo)
                 for s in d["series"]:
                     s["valores"].insert(i, None)
-            i = d["fechas"].index(periodo)
-            if serie["valores"][i] is None:
-                serie["valores"][i] = valor
-                serie.setdefault("manual_periodos", []).append(periodo)
-                usados.append(f"{key} {periodo}")
-            else:
-                ignorados.append(f"{key} {periodo}")
+            serie["valores"][d["fechas"].index(periodo)] = valor
+            serie.setdefault("manual_periodos", []).append(periodo)
         ruta.write_text(json.dumps(d, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-        if usados:
-            print(f"  {indicador}: {len(usados)} datos completados a mano ({usados[0]}...)")
-        if ignorados:
-            print(f"  {indicador}: la API ya trae {len(ignorados)} datos de completar.csv; se pueden borrar")
+        ultimo = max(p for _, p, _ in propias)
+        print(f"  {indicador}: {len(propias)} datos cargados a mano mientras la API está atrasada (hasta {ultimo})")
         if resumen and indicador in resumen.get("indicadores", {}):
             s0 = d["series"][0]
             for fch, v in zip(reversed(d["fechas"]), reversed(s0["valores"])):

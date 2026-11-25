@@ -1,9 +1,11 @@
 """Adelanta el EMAE desde los cuadros del INDEC cuando la API de datos.gob.ar viene atrasada.
 
-Baja los Excel del INDEC (total y sectores), busca los meses que data/emae.json todavía no
-tiene y los agrega a manual/completar.csv. Las columnas del Excel se asignan a las series
-comparando con los meses que ya están publicados, así que si el INDEC cambia el orden no se
-cruzan los datos: si alguna serie no coincide, el script frena sin escribir nada.
+Baja los Excel del INDEC (total y sectores) y escribe en manual/completar.csv los meses que
+data/emae.json todavía no tiene, junto con las correcciones que el INDEC hizo a los meses
+anteriores en esa misma publicación (reemplaza las filas del EMAE que hubiera). Las columnas
+del Excel se asignan a las series comparando con la historia ya publicada, así que si el
+INDEC cambia el orden no se cruzan los datos: si alguna serie no coincide, el script frena
+sin escribir nada.
 
 Es una herramienta para correr a mano (necesita la librería xlrd); la actualización
 automática no la usa. Después hay que commitear manual/completar.csv y correr el workflow.
@@ -23,7 +25,10 @@ ROOT = Path(__file__).resolve().parent.parent
 BASE = "https://www.indec.gob.ar/ftp/cuadros/economia/"
 MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto",
          "septiembre", "octubre", "noviembre", "diciembre"]
-TOLERANCIA = 0.001  # diferencia relativa máxima para dar por buena una columna
+TOLERANCIA = 0.001   # diferencia relativa para considerar igual un mes
+COINCIDENCIA = 0.9   # proporción de meses iguales para dar por buena una columna (el resto, revisiones)
+REVISION = 0.0001    # diferencia relativa a partir de la cual un mes ya publicado se corrige
+MESES_REVISADOS = 24 # solo se corrigen los últimos meses (la API trae la historia completa al ponerse al día)
 
 
 def bajar(nombre, carpeta):
@@ -54,7 +59,8 @@ def columnas(ruta, hoja):
 
 def coincide(col, publicados):
     comunes = [p for p in publicados if p in col and publicados[p]]
-    return len(comunes) >= 24 and all(abs(col[p] / publicados[p] - 1) < TOLERANCIA for p in comunes)
+    iguales = sum(abs(col[p] / publicados[p] - 1) < TOLERANCIA for p in comunes)
+    return len(comunes) >= 24 and iguales >= COINCIDENCIA * len(comunes)
 
 
 def main():
@@ -82,17 +88,24 @@ def main():
         print(f"El INDEC no tiene meses posteriores a {ultimo}. Nada para completar.")
         return
 
+    desde = d["fechas"][-MESES_REVISADOS]
+    filas, corregidos = [], set()
+    for key, col in asignadas.items():
+        pub = publicados[key]
+        for p in sorted(col):
+            if p > ultimo or (p >= desde and pub.get(p) and abs(col[p] / pub[p] - 1) > REVISION):
+                filas.append(("emae", key, p, round(col[p], 4), "INDEC, cuadros del EMAE (carga manual)"))
+                if p <= ultimo:
+                    corregidos.add(p)
+
     ruta_csv = ROOT / "manual" / "completar.csv"
-    existentes = set()
-    with open(ruta_csv, encoding="utf-8") as f:
-        for r in csv.DictReader(l for l in f if not l.lstrip().startswith("#")):
-            existentes.add((r["indicador"], r["serie"], r["periodo"]))
-    filas = [("emae", key, p, round(col[p], 4), "INDEC, cuadros del EMAE (carga manual)")
-             for p in nuevos for key, col in asignadas.items()
-             if p in col and ("emae", key, p) not in existentes]
-    with open(ruta_csv, "a", encoding="utf-8", newline="") as f:
+    lineas = ruta_csv.read_text(encoding="utf-8").splitlines(keepends=True)
+    lineas = [l for l in lineas if not l.startswith("emae,")]
+    with open(ruta_csv, "w", encoding="utf-8", newline="") as f:
+        f.writelines(lineas)
         csv.writer(f, lineterminator="\n").writerows(filas)
-    print(f"Agregados {len(filas)} datos del EMAE ({', '.join(nuevos)}) a manual/completar.csv")
+    print(f"EMAE: {len(filas)} datos en manual/completar.csv. Meses nuevos: {', '.join(nuevos)}."
+          + (f" Meses corregidos por el INDEC: {', '.join(sorted(corregidos))}." if corregidos else ""))
     for key in ("general", "general_desest"):
         for p in nuevos:
             if p in asignadas[key]:
